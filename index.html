@@ -52,19 +52,18 @@
             })
             .catch(error => console.error(error));
 
-        const nounList = wordList.filter(word => word.type === 'noun');
-        const particleList = wordList.filter(word => word.type === 'particle');
-        const verbList = wordList.filter(word => word.type === 'verb');
-
-        console.log(nounList);
-        console.log(particleList);
-        console.log(verbList);
-
         setInterval(() => {
             const textContainer = document.getElementById("text-container");
 
             // Filter the array to get only the words with the desired types
             // const filteredList = wordList.filter(word => word.type === 'noun' || word.type === 'verb' || word.type === 'particle');
+            const nounList = wordList.filter(word => word.type === 'noun');
+            const particleList = wordList.filter(word => word.type === 'particle');
+            const verbList = wordList.filter(word => word.type === 'verb');
+
+            console.log(nounList);
+            console.log(particleList);
+            console.log(verbList);
 
             // Select a random word from the filtered list
             const noun = nounList[Math.floor(Math.random() * nounList.length)];
