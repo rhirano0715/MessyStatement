@@ -52,16 +52,22 @@
             })
             .catch(error => console.error(error));
 
+        const nounList = wordList.filter(word => word.type === 'noun');
+        const particleList = wordList.filter(word => word.type === 'particle');
+        const verbList = wordList.filter(word.type === 'verb');
+
         setInterval(() => {
             const textContainer = document.getElementById("text-container");
 
             // Filter the array to get only the words with the desired types
-            const filteredList = wordList.filter(word => word.type === 'noun' || word.type === 'verb' || word.type === 'particle');
+            // const filteredList = wordList.filter(word => word.type === 'noun' || word.type === 'verb' || word.type === 'particle');
 
             // Select a random word from the filtered list
-            const selectedWord = filteredList[Math.floor(Math.random() * filteredList.length)];
+            const noun = nounList[Math.floor(Math.random() * nounList.length)];
+            const particle = particleList[Math.floor(Math.random() * particleList.length)];
+            const verb = verbList[Math.floor(Math.random() * verbList.length)];
 
-            textContainer.innerText = selectedWord.word;
+            textContainer.innerText = noun.word + " " + particle.word + " " + verb.word;
         }, 5000);
     </script>
 </body>
