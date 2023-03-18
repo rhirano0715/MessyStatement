@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Word stream</title>
+    <style>
+        #center-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        #text-container {
+            font-size: 8vw;
+            text-align: center;
+        }
+
+    </style>
+</head>
+
+<body>
+    <div id="center-container">
+        <div id="text-container">Word stream</div>
+    </div>
+
+    <script>
+        // Define an empty array to store the word list
+        let wordList = [];
+
+        // Fetch the TSV file using fetch() and convert it to a text string using text()
+        fetch('wordlist.tsv')
+            .then(response => response.text())
+            .then(data => {
+                // Split the text string into an array of rows using split()
+                const rows = data.split('\n');
+
+                // Loop through the rows and split each row into an array of columns using split()
+                for (let i = 0; i < rows.length; i++) {
+                    const columns = rows[i].split('\t');
+
+                    // Create an object with keys for type and word and push it to the wordList array
+                    wordList.push({
+                        type: columns[0],
+                        word: columns[1]
+                    });
+                }
+
+                // Call any functions that depend on the wordList array here
+                // For example:
+                console.log(wordList);
+            })
+            .catch(error => console.error(error));
+
+        setInterval(() => {
+            const textContainer = document.getElementById("text-container");
+
+            // Filter the array to get only the words with the desired types
+            const filteredList = wordList.filter(word => word.type === 'noun' || word.type === 'verb' || word.type === 'particle');
+
+            // Select a random word from the filtered list
+            const selectedWord = filteredList[Math.floor(Math.random() * filteredList.length)];
+
+            textContainer.innerText = selectedWord.word;
+        }, 5000);
+    </script>
+</body>
+
+</html>
