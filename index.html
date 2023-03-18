@@ -54,7 +54,7 @@
 
         const nounList = wordList.filter(word => word.type === 'noun');
         const particleList = wordList.filter(word => word.type === 'particle');
-        const verbList = wordList.filter(word.type === 'verb');
+        const verbList = wordList.filter(word => word.type === 'verb');
 
         setInterval(() => {
             const textContainer = document.getElementById("text-container");
