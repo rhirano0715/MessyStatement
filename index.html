@@ -32,6 +32,12 @@
             word-break: keep-all;
         }
 
+        button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+        }
+
     </style>
 </head>
 
@@ -39,46 +45,90 @@
     <div id="center-container">
         <div id="text-container">Messy Statement</div>
     </div>
+    <button id="toggle-animation" onclick="toggleAnimation()">Pause</button>
 
     <script>
         // Define an empty array to store the word list
         let wordList = [];
+        let isPaused = false;
+        let timeout;
 
-        // Fetch the TSV file using fetch() and convert it to a text string using text()
-        fetch('wordlist.tsv')
-            .then(response => response.text())
-            .then(data => {
-                // Split the text string into an array of rows using split()
-                const rows = data.split('\n');
+        // // Fetch the TSV file using fetch() and convert it to a text string using text()
+        // fetch('wordlist.tsv')
+        //     .then(response => response.text())
+        //     .then(data => {
+        //         // Split the text string into an array of rows using split()
+        //         const rows = data.split('\n');
 
-                // Loop through the rows and split each row into an array of columns using split()
-                for (let i = 0; i < rows.length; i++) {
-                    const columns = rows[i].split('\t');
+        //         // Loop through the rows and split each row into an array of columns using split()
+        //         for (let i = 0; i < rows.length; i++) {
+        //             const columns = rows[i].split('\t');
 
-                    // Create an object with keys for type and word and push it to the wordList array
-                    wordList.push({
-                        type: columns[0],
-                        word: columns[1]
-                    });
-                }
-            })
-            .catch(error => console.error(error));
+        //             // Create an object with keys for type and word and push it to the wordList array
+        //             wordList.push({
+        //                 type: columns[0],
+        //                 word: columns[1]
+        //             });
+        //         }
+        //     })
+        //     .catch(error => console.error(error));
 
-        setInterval(() => {
-            const textContainer = document.getElementById("text-container");
+        function initAnimation() {
+            setTimeout(() => {
+                // Fetch the TSV file using fetch() and convert it to a text string using text()
+                fetch('wordlist.tsv')
+                    .then(response => response.text())
+                    .then(data => {
+                        // Split the text string into an array of rows using split()
+                        const rows = data.split('\n');
 
-            // Filter the array to get only the words with the desired types
-            const nounList = wordList.filter(word => word.type === 'noun');
-            const particleList = wordList.filter(word => word.type === 'particle');
-            const verbList = wordList.filter(word => word.type === 'verb');
+                        // Loop through the rows and split each row into an array of columns using split()
+                        for (let i = 0; i < rows.length; i++) {
+                            const columns = rows[i].split('\t');
 
-            // Select a random word from the filtered list
-            const noun = nounList[Math.floor(Math.random() * nounList.length)];
-            const particle = particleList[Math.floor(Math.random() * particleList.length)];
-            const verb = verbList[Math.floor(Math.random() * verbList.length)];
+                            // Create an object with keys for type and word and push it to the wordList array
+                            wordList.push({
+                                type: columns[0],
+                                word: columns[1]
+                            });
+                        }
+                        updateText(); // Start the animation after wordList is loaded
+                    })
+                    .catch(error => console.error(error));
+            }, 5000)
+        }
 
-            textContainer.innerText = noun.word + " " + particle.word + " " + verb.word;
-        }, 5000);
+        function updateText() {
+            if (!isPaused) {
+                const textContainer = document.getElementById("text-container");
+
+                // Filter the array to get only the words with the desired types
+                const nounList = wordList.filter(word => word.type === 'noun');
+                const particleList = wordList.filter(word => word.type === 'particle');
+                const verbList = wordList.filter(word => word.type === 'verb');
+
+                // Select a random word from the filtered list
+                const noun = nounList[Math.floor(Math.random() * nounList.length)];
+                const particle = particleList[Math.floor(Math.random() * particleList.length)];
+                const verb = verbList[Math.floor(Math.random() * verbList.length)];
+
+                textContainer.innerText = noun.word + " " + particle.word + " " + verb.word;
+            }
+            timeout = setTimeout(updateText, 5000);
+        }
+
+        function toggleAnimation() {
+            isPaused = !isPaused;
+            const toggleButton = document.getElementById("toggle-animation");
+            toggleButton.innerText = isPaused ? "Play" : "Pause";
+            if (!isPaused) {
+                updateText();
+            } else {
+                clearTimeout(timeout);
+            }
+        }
+
+        initAnimation();
     </script>
 </body>
 
