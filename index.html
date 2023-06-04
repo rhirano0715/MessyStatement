@@ -37,7 +37,6 @@
             bottom: 20px;
             right: 20px;
         }
-
     </style>
 </head>
 
@@ -45,7 +44,7 @@
     <div id="center-container">
         <div id="text-container">Messy Statement</div>
     </div>
-    <button id="toggle-animation" onclick="toggleAnimation()">Pause</button>
+    <button id="toggle-animation" onclick="toggleAnimation()">II</button>
 
     <script>
         // Define an empty array to store the word list
@@ -120,7 +119,7 @@
         function toggleAnimation() {
             isPaused = !isPaused;
             const toggleButton = document.getElementById("toggle-animation");
-            toggleButton.innerText = isPaused ? "Play" : "Pause";
+            toggleButton.innerText = isPaused ? "▶" : "II";
             if (!isPaused) {
                 updateText();
             } else {
