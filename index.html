@@ -52,26 +52,6 @@
         let isPaused = false;
         let timeout;
 
-        // // Fetch the TSV file using fetch() and convert it to a text string using text()
-        // fetch('wordlist.tsv')
-        //     .then(response => response.text())
-        //     .then(data => {
-        //         // Split the text string into an array of rows using split()
-        //         const rows = data.split('\n');
-
-        //         // Loop through the rows and split each row into an array of columns using split()
-        //         for (let i = 0; i < rows.length; i++) {
-        //             const columns = rows[i].split('\t');
-
-        //             // Create an object with keys for type and word and push it to the wordList array
-        //             wordList.push({
-        //                 type: columns[0],
-        //                 word: columns[1]
-        //             });
-        //         }
-        //     })
-        //     .catch(error => console.error(error));
-
         function initAnimation() {
             setTimeout(() => {
                 // Fetch the TSV file using fetch() and convert it to a text string using text()
